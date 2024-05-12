@@ -1,9 +1,6 @@
 sanic
 sanic-ext
-pdf2image
 paddleocr
 paddlepaddle
 pypdfium2
-reportlab
-img2pdf
 numpy

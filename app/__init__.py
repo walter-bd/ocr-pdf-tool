@@ -1,10 +1,6 @@
 import io
 import numpy as np
-from pdf2image import convert_from_bytes
 from paddleocr import PaddleOCR
-from reportlab.pdfgen import canvas
-import img2pdf
-import pytesseract
 from sanic import Sanic, response
 from sanic_jinja2 import SanicJinja2
 from sanic_session import Session, InMemorySessionInterface
@@ -18,14 +14,10 @@ import os
 # Creating a lock
 lock = threading.Lock()
 from .helper import insert_text
-import ocrmypdf
 # Initialize Sanic application
 app = Sanic("PDF_Processor")
 session = Session(app, interface=InMemorySessionInterface())
 jinja = SanicJinja2(app, session=session, pkg_name='app')
-
-# Initialize PaddleOCR with the desired language(s)
-
 
 
 def process_page(pdf, batch):
