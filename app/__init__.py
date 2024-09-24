@@ -21,19 +21,20 @@ jinja = SanicJinja2(app, session=session, pkg_name='app')
 
 
 def process_page(pdf, batch):
-    ocr = PaddleOCR(lang="es", use_gpu=True, det=True, rec=True, cls=True, use_space_char=True, use_angle_cls=True, rec_algorithm='SVTR_LCNet')
+    ocr = PaddleOCR(lang="latin", use_gpu=False, det=True, rec=True, cls=True, use_space_char=True, use_angle_cls=True, rec_algorithm='SVTR_LCNet')
     print(batch)
     for index in batch:
         with lock:
             page = pdf.get_page(index)
-        image = page.render()
-        np_image = image.to_numpy()
+            image = page.render()
+            np_image = image.to_numpy()
         output = ocr.ocr(np_image)
-        print(f"page {index}")
-        text_page = [[item[0][3], str(item[1][0]).lower(), item[0][0][1] - item[0][3][1]] for item in output[0] if item[1][1] > 0.5]
-        for text in text_page:
-            insert_text(self_pdf=page, pos_x=float(text[0][0]), pos_y=float(page.get_height()) - float(text[0][1]), 
-                                text=text[1], font_size=abs(int(float(text[2]))))
+        if output[0] is not None:
+            print(f"page {index}")
+            text_page = [[item[0][3], str(item[1][0]).lower(), item[0][0][1] - item[0][3][1]] for item in output[0] if item[1][1] > 0.5]
+            for text in text_page:
+                insert_text(self_pdf=page, pos_x=float(text[0][0]), pos_y=float(page.get_height()) - float(text[0][1]), 
+                                    text=text[1], font_size=abs(int(float(text[2]))))
         with lock:
             page.gen_content()
     return "Ok"
