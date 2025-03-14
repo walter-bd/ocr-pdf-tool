@@ -1,6 +1,9 @@
-sanic
-sanic-ext
-paddleocr
-paddlepaddle
-pypdfium2
-numpy
+fastapi==0.115.11
+sanic==24.12.0
+sanic-ext==24.12.0
+sanic-session==0.8.0
+sanic-jinja2==2022.11.11
+paddleocr==2.10.0
+paddlepaddle==2.6.2
+pypdfium2==4.30.1
+numpy==2.2.3

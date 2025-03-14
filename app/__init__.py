@@ -11,11 +11,13 @@ import pypdfium2 as pdfium
 import concurrent.futures
 import threading
 import os
+from app.config import Config
 # Creating a lock
 lock = threading.Lock()
-from .helper import insert_text
+from app.helper import insert_text
 # Initialize Sanic application
 app = Sanic("PDF_Processor")
+app.update_config(Config)
 session = Session(app, interface=InMemorySessionInterface())
 jinja = SanicJinja2(app, session=session, pkg_name='app')
 
